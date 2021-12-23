@@ -8,10 +8,10 @@ import {
 const { test } = Deno
 
 test("holiday", () => {
-  const umino_hi = new Date(2021, 6, 22) // 2021/7/22
+  const bunka_no_hi = new Date('2022/11/3')
 
-  assert(mod.isHoliday(umino_hi))
-  assertEquals('海の日', mod.getHoliday(umino_hi)!.name)
+  assert(mod.isHoliday(bunka_no_hi))
+  assertEquals('文化の日', mod.getHoliday(bunka_no_hi)!.name)
 
   const kodomo_no_hi = new Date('1993/5/5')
 
