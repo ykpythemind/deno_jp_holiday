@@ -1,6 +1,5 @@
 // Code generated. DO NOT EDIT.
 export const holidays: Record<string, string> = {
-  "1955/1/1": "元日",
   "1955/1/15": "成人の日",
   "1955/3/21": "春分の日",
   "1955/4/29": "天皇誕生日",
