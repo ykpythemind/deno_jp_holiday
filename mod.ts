@@ -1,28 +1,28 @@
-import { holidays } from './holidays.ts'
+import { holidays } from "./holidays.ts";
 
-import { format } from './deps.ts'
+import { format } from "./deps.ts";
 
 export type Holiday = {
-  name: string
+  name: string;
   // todo: meta information for translation??
-}
+};
 
 export const getHoliday = (date: Date): Holiday | null => {
   // 内閣府のcsv依存のフォーマット...
-  const d = format(date, 'yyyy/M/d')
+  const d = format(date, "yyyy/M/d");
 
-  const h = holidays[d]
+  const h = holidays[d];
 
   if (h) {
-    return { name: h }
+    return { name: h };
   } else {
-    return null
+    return null;
   }
-}
+};
 
 export const isHoliday = (date: Date): boolean => {
-  return getHoliday(date) ? true : false
-}
+  return getHoliday(date) ? true : false;
+};
 
 // TODO:
 // getHolidaysBetween(date: Date, date: Date)

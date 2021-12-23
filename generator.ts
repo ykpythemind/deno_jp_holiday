@@ -1,36 +1,39 @@
-import { parse as parseCsv } from './deps.ts'
+import { parse as parseCsv } from "./deps.ts";
 
-type HolidayCsv = { date: string, name: string }
+type HolidayCsv = { date: string; name: string };
 
-const JP_HOLIDAY_CSV_URL = 'https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv'
+const JP_HOLIDAY_CSV_URL =
+  "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv";
 
-const decoder = new TextDecoder("shift-jis")
+const decoder = new TextDecoder("shift-jis");
 
+const resp = await fetch(JP_HOLIDAY_CSV_URL);
 
-const resp = await fetch(JP_HOLIDAY_CSV_URL)
+const decoded = decoder.decode(await resp.arrayBuffer());
 
-const decoded = decoder.decode(await resp.arrayBuffer())
+const a = await parseCsv(decoded, {
+  skipFirstRow: true,
+  columns: ["date", "name"],
+}) as HolidayCsv[];
 
-const a = await parseCsv(decoded, { skipFirstRow: true, columns: ['date', 'name'] }) as HolidayCsv[]
+let script = "// Code generated. DO NOT EDIT.\n";
+script += "export const holidays: Record<string, string> = {";
 
-let script = '// Code generated. DO NOT EDIT.\n'
-script += 'export const holidays: Record<string, string> = {'
+a.forEach((holiday) => {
+  script += `"${holiday.date}":"${holiday.name}",`;
+});
 
-a.forEach(holiday => {
-  script += `"${holiday.date}":"${holiday.name}",`
-})
+script += "}";
 
-script += '}'
+Deno.writeTextFileSync("holidays.ts", script);
+console.log("holiday file generated.");
 
-Deno.writeTextFileSync('holidays.ts', script)
-console.log('holiday file generated.')
+const p = Deno.run({ cmd: ["deno", "fmt", "holidays.ts"] });
 
-const p = Deno.run({ cmd: ['deno', 'fmt', 'holidays.ts'] })
-
-const st = await p.status()
+const st = await p.status();
 if (st.success) {
-  console.log('deno fmt.')
+  console.log("deno fmt.");
 } else {
-  console.log('deno fmt failed')
-  Deno.exit(1)
+  console.log("deno fmt failed");
+  Deno.exit(1);
 }
