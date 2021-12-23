@@ -22,7 +22,7 @@ jobs:
         id: today
 
       - name: run generator
-        run: deno -q run --allow-net --allow-write --allow
+        run: deno -q run --allow-net --allow-write --allow-run generator.ts
 
       - name: Create Pull Request (if changes exists)
         uses: peter-evans/create-pull-request@v3
