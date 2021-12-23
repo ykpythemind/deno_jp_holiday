@@ -14,7 +14,7 @@ const decoded = decoder.decode(await resp.arrayBuffer())
 const a = await parseCsv(decoded, { skipFirstRow: true, columns: ['date', 'name'] }) as HolidayCsv[]
 
 let script = '// Code generated. DO NOT EDIT.\n'
-script += 'export const holidays = {'
+script += 'export const holidays: Record<string, string> = {'
 
 a.forEach(holiday => {
   script += `"${holiday.date}":"${holiday.name}",`
