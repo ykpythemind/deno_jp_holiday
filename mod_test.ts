@@ -13,7 +13,7 @@ test("holiday", () => {
   assert(mod.isHoliday(bunka_no_hi));
   assertEquals("文化の日", mod.getHoliday(bunka_no_hi)!.name);
 
-  console.log(mod.getHoliday(bunka_no_hi)!.date)
+  console.log(mod.getHoliday(bunka_no_hi)!.date);
 
   const kodomo_no_hi = new Date("1993/5/5");
 
