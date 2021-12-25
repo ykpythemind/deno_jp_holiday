@@ -17,13 +17,13 @@ const a = await parseCsv(decoded, {
 }) as HolidayCsv[];
 
 let script = "// Code generated. DO NOT EDIT.\n";
-script += "export const holidays: Record<string, string> = {";
+script += "export const holidays: Array<{date: string, name: string}> = [";
 
 a.forEach((holiday) => {
-  script += `"${holiday.date}":"${holiday.name}",`;
+  script += `{date: "${holiday.date}", name:"${holiday.name}"},`;
 });
 
-script += "}";
+script += "]";
 
 Deno.writeTextFileSync("holidays.ts", script);
 console.log("holiday file generated.");
